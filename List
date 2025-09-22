@@ -1,0 +1,91 @@
+class MyArrayList {
+    private int[] arr;
+    private int size;   // số phần tử hiện có
+
+    public MyArrayList(int capacity) {
+        arr = new int[capacity];
+        size = 0;
+    }
+
+    // Truy cập
+    public int get(int index) {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
+        return arr[index];
+    }
+
+    // Chèn vào cuối
+    public void addLast(int value) {
+        ensureCapacity();
+        arr[size++] = value;
+    }
+
+    // Chèn vào đầu
+    public void addFirst(int value) {
+        ensureCapacity();
+        for (int i = size; i > 0; i--) {
+            arr[i] = arr[i - 1];
+        }
+        arr[0] = value;
+        size++;
+    }
+
+    // Chèn vào vị trí i
+    public void addAt(int index, int value) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+        ensureCapacity();
+        for (int i = size; i > index; i--) {
+            arr[i] = arr[i - 1];
+        }
+        arr[index] = value;
+        size++;
+    }
+
+    // Xóa đầu
+    public void removeFirst() {
+        if (size == 0) return;
+        for (int i = 0; i < size - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        size--;
+    }
+
+    // Xóa cuối
+    public void removeLast() {
+        if (size > 0) size--;
+    }
+
+    // Xóa vị trí i
+    public void removeAt(int index) {
+        if (index < 0 || index >= size) return;
+        for (int i = index; i < size - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        size--;
+    }
+
+    // Duyệt xuôi
+    public void traverseForward() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // Duyệt ngược
+    public void traverseBackward() {
+        for (int i = size - 1; i >= 0; i--) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    private void ensureCapacity() {
+        if (size == arr.length) {
+            int[] newArr = new int[arr.length * 2];
+            for (int i = 0; i < arr.length; i++) {
+                newArr[i] = arr[i];
+            }
+            arr = newArr;
+        }
+    }
+}
