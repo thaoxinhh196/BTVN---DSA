@@ -1,0 +1,121 @@
+// Lớp Node
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class MyLinkedList {
+    private Node head;
+
+    public MyLinkedList() {
+        head = null;
+    }
+
+    // Chèn vào đầu
+    public void addFirst(int value) {
+        Node newNode = new Node(value);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    // Chèn vào cuối
+    public void addLast(int value) {
+        Node newNode = new Node(value);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+    }
+
+    // Chèn vào vị trí i (0-based)
+    public void addAt(int index, int value) {
+        if (index == 0) {
+            addFirst(value);
+            return;
+        }
+        Node newNode = new Node(value);
+        Node temp = head;
+        for (int i = 0; i < index - 1 && temp != null; i++) {
+            temp = temp.next;
+        }
+        if (temp == null) return; // index không hợp lệ
+        newNode.next = temp.next;
+        temp.next = newNode;
+    }
+
+    // Xóa phần tử đầu
+    public void removeFirst() {
+        if (head != null) {
+            head = head.next;
+        }
+    }
+
+    // Xóa phần tử cuối
+    public void removeLast() {
+        if (head == null) return;
+        if (head.next == null) {
+            head = null;
+            return;
+        }
+        Node temp = head;
+        while (temp.next.next != null) {
+            temp = temp.next;
+        }
+        temp.next = null;
+    }
+
+    // Xóa phần tử tại vị trí i
+    public void removeAt(int index) {
+        if (index == 0 && head != null) {
+            head = head.next;
+            return;
+        }
+        Node temp = head;
+        for (int i = 0; i < index - 1 && temp != null; i++) {
+            temp = temp.next;
+        }
+        if (temp == null || temp.next == null) return; // index không hợp lệ
+        temp.next = temp.next.next;
+    }
+
+    // Truy cập phần tử tại vị trí i
+    public Integer get(int index) {
+        Node temp = head;
+        for (int i = 0; i < index && temp != null; i++) {
+            temp = temp.next;
+        }
+        return (temp != null) ? temp.data : null;
+    }
+
+    // Duyệt xuôi
+    public void traverseForward() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    // Duyệt ngược (dùng đệ quy)
+    public void traverseBackward(Node node) {
+        if (node == null) return;
+        traverseBackward(node.next);
+        System.out.print(node.data + " ");
+    }
+
+    public Node getHead() {
+        return head;
+    }
+}
+
